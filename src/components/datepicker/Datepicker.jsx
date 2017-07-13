@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import DatePicker from 'react-bootstrap-date-picker';
 import { Row, Col } from 'react-bootstrap';
-import logo from './logo.svg';
-import './App.css';
+import Moment from 'moment';
 
-class App extends Component {
+class Datepicker extends Component {
 
   constructor() {
     super();
     this.state = {
-      value: new Date().toISOString()
+      value: Moment().toISOString()
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -18,7 +17,8 @@ class App extends Component {
 
   componentDidMount() {
     ReactDOM.findDOMNode(this.datePicker.refs.input).addEventListener("change", (event) => {
-      this.handleChange(null, event.target.value);
+      const value = event.target.value;
+      this.handleChange(Moment(value).toISOString(), value);
     });
   }
 
@@ -39,9 +39,9 @@ class App extends Component {
       <div>
         <Row>
           <Col xs={3} sm={3} md={3}>
-            <DatePicker 
-              id="example-datepicker" 
-              value={this.state.value} 
+            <DatePicker
+              id="datepicker"
+              value={this.state.value}
               onChange={this.handleChange}
               ref={(c) => this.datePicker = c} />
           </Col>
@@ -51,4 +51,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Datepicker;
